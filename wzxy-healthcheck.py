@@ -174,7 +174,10 @@ class WoZaiXiaoYuanPuncher:
             print("消息经pushplus推送成功")
         if os.environ.get('GOBOT_URL'):
             # go_cqhttp 推送
-            url = f'{os.environ.["GOBOT_URL"]}?access_token={push_config.get("GOBOT_TOKEN")}&{push_config.get("GOBOT_QQ")}&message=⏰ 我在校园打卡结果通知\n---------\n\n打卡项目：健康打卡\n\n打卡情况：{notifyResult}\n\n打卡时间: {notifyTime}'
+            GOBOT_URL = os.environ["GOBOT_URL"]
+            GOBOT_TOKEN = os.environ["GOBOT_TOKEN"]
+            GOBOT_QQ = os.environ["GOBOT_QQ"]
+            url = f'{GOBOT_URL}?access_token={GOBOT_TOKEN}&{GOBOT_QQ}&message=⏰ 我在校园打卡结果通知\n---------\n\n打卡项目：健康打卡\n\n打卡情况：{notifyResult}\n\n打卡时间: {notifyTime}'
             response = requests.get(url).json()
             if response["status"] == "ok":
                 print("消息经go-cqhttp 推送成功！")
