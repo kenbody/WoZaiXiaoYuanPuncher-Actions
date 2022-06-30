@@ -11,6 +11,7 @@ import urllib
 import urllib.parse
 from urllib.parse import urlencode
 from urllib3.util import Retry
+sign_time = int(round(time.time() * 1000)) #13位
 
 
 class WoZaiXiaoYuanPuncher:
@@ -83,6 +84,7 @@ class WoZaiXiaoYuanPuncher:
     def doPunchIn(self):
         print("正在打卡...")
         url = "https://student.wozaixiaoyuan.com/health/save.json"
+        content = f"广东省_{sign_time}_广州市"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         self.header['JWSESSION'] = self.getJwsession()
@@ -96,6 +98,9 @@ class WoZaiXiaoYuanPuncher:
             "province": os.environ['WZXY_PROVINCE'],
             "township": os.environ['WZXY_TOWNSHIP'],
             "street": os.environ['WZXY_STREET'],
+            "city_code": "156440100",
+            "timestampHeader": sign_time,
+            "signatureHeader": signature
         }
         data = urlencode(sign_data)
         self.session = requests.session()
