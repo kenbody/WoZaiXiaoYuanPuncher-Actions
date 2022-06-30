@@ -1,10 +1,12 @@
 # -*- encoding:utf-8 -*-
 import requests
 import json
+import time
+import hashlib
 import os
 import utils
 from urllib.parse import urlencode
-
+sign_time = int(round(time.time() * 1000)) #13位
 
 class WoZaiXiaoYuanPuncher:
     def __init__(self):
@@ -120,6 +122,8 @@ class WoZaiXiaoYuanPuncher:
     def doPunchIn(self, seq):
         print("正在进行：" + self.getSeq() + "...")
         url = "https://student.wozaixiaoyuan.com/heat/save.json"
+        content = f"{self.data['province']}_{sign_time}_{self.data['city']}"
+        signature = hashlib.sha256(content.encode('utf-8')).hexdigest()
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         self.header['JWSESSION'] = self.getJwsession()
@@ -137,7 +141,10 @@ class WoZaiXiaoYuanPuncher:
             "street": os.environ['WZXY_STREET'],
             "myArea": "",
             "areacode": "",
-            "userId": ""
+            "userId": "",
+            "city_code": self.data['city_code'],
+            "timestampHeader": sign_time,
+            "signatureHeader": signature
         }
         data = urlencode(sign_data)
         self.session = requests.session()    
