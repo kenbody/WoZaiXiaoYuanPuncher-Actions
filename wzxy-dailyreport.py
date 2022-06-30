@@ -122,7 +122,7 @@ class WoZaiXiaoYuanPuncher:
     def doPunchIn(self, seq):
         print("正在进行：" + self.getSeq() + "...")
         url = "https://student.wozaixiaoyuan.com/heat/save.json"
-        content = f"{self.data['province']}_{sign_time}_{self.data['city']}"
+        content = f"广东省_{sign_time}_广州市"
         signature = hashlib.sha256(content.encode('utf-8')).hexdigest()
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
@@ -142,7 +142,7 @@ class WoZaiXiaoYuanPuncher:
             "myArea": "",
             "areacode": "",
             "userId": "",
-            "city_code": self.data['156440100'],
+            "city_code": "156440100",
             "timestampHeader": sign_time,
             "signatureHeader": signature
         }
