@@ -85,6 +85,7 @@ class WoZaiXiaoYuanPuncher:
         print("正在打卡...")
         url = "https://student.wozaixiaoyuan.com/health/save.json"
         content = f"广东省_{sign_time}_广州市"
+        signature = hashlib.sha256(content.encode('utf-8')).hexdigest()
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         self.header['JWSESSION'] = self.getJwsession()
