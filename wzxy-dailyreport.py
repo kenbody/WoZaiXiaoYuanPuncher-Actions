@@ -142,7 +142,7 @@ class WoZaiXiaoYuanPuncher:
             "myArea": "",
             "areacode": "",
             "userId": "",
-            "city_code": self.data['city_code'],
+            "city_code": self.data['156440100'],
             "timestampHeader": sign_time,
             "signatureHeader": signature
         }
